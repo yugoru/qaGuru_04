@@ -12,28 +12,29 @@ public class Parameters {
 
     String firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
-            subject = "Hindi",
-            subject2 = "Maths",
             currentAddress = faker.address().fullAddress(),
             email = faker.internet().emailAddress(),
-
-    gender = "label[for=gender-radio-2]",
-            genderName = "Female",
-            hobby2 = "Music",
-            hobby3 = "Reading",
             month = "April",
             year = "1991",
-            day = ".react-datepicker__day--026",
-            convertedDate = "26 " + month + "," + year,
+            day = "12", //дата из двух цифр, например 03
+            convertedDate = day + " " + month + "," + year,
             state = "Haryana",
             city = "Panipat",
             endPoint = "https://demoqa.com/automation-practice-form",
             phone = faker.number().digits(10);
 
+    String[] subjects = new String[]{"Maths", "English", "Biology", "Computer Science"};
+    String[] hobbes = new String[]{"Reading", "Music", "Sports"};
+    String subject = subjects[(int) (0 + (Math.random() * 3))];
+    String hobby = hobbes[(int) (0 + (Math.random() * 2))];
+
+    String[] genders = new String[]{"Female", "Male", "Other"};
+    int randomGender = (int) (0 + (Math.random() * 2));
+    String genderName = genders[randomGender];
+    String gender = "label[for=gender-radio-" + randomGender +"]";
 
     Path fileP = Paths.get("/Volumes/Macintosh HD - Data/JavaLesson/qaGuru_2/src/files/1.jpeg");
     File file = new File(fileP.toString());
     String fileName = fileP.getFileName().toString();
-
 
 }
