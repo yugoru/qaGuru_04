@@ -2,9 +2,9 @@ package pageObjects;
 
 import com.github.javafaker.Faker;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 
 public class Parameters {
 
@@ -25,16 +25,20 @@ public class Parameters {
 
     String[] subjects = new String[]{"Maths", "English", "Biology", "Computer Science"};
     String[] hobbes = new String[]{"Reading", "Music", "Sports"};
-    String subject = subjects[(int) (0 + (Math.random() * 3))];
-    String hobby = hobbes[(int) (0 + (Math.random() * 2))];
+    String subject = getRandomFromArray(subjects);
+    String hobby = getRandomFromArray(hobbes);
 
     String[] genders = new String[]{"Female", "Male", "Other"};
-    int randomGender = (int) (0 + (Math.random() * 2));
+    int randomGender = new Random().nextInt(3) + 1;
     String genderName = genders[randomGender];
-    String gender = "label[for=gender-radio-" + randomGender +"]";
+    String gender = "label[for=gender-radio-" + randomGender + "]";
 
-    Path fileP = Paths.get("/Volumes/Macintosh HD - Data/JavaLesson/qaGuru_2/src/files/1.jpeg");
-    File file = new File(fileP.toString());
+    Path fileP = Paths.get("1.jpeg");
     String fileName = fileP.getFileName().toString();
+
+    private String getRandomFromArray(String[] array) {
+        int rnd = new Random().nextInt(array.length);
+        return array[rnd];
+    }
 
 }

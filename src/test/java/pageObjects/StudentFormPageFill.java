@@ -12,35 +12,32 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class StudentFormPageFill extends Parameters {
 
-    @BeforeAll
-    static void setup() {
-        Configuration.startMaximized = true;
-    }
+    public void openForm() {open(endPoint);}
 
-    @Test
     public void fillTheForm() {
-        open(endPoint);
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
         $(gender).click();
         $("#userNumber").setValue(phone);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").find(byText(month)).click();
-        $(".react-datepicker__year-select").find(byText(year)).click();
-        $(".react-datepicker__day--0" + day).click();
+        setupBirthDay();
         $("#subjectsInput").sendKeys(subject);
         $(".css-26l3qy-menu div").find(byText(subject)).click();
         $("#hobbiesWrapper").find(byText(hobby)).click();
-        $("#uploadPicture").uploadFile(file);
+        $("#uploadPicture").uploadFromClasspath(fileName);
         $("#currentAddress").setValue(currentAddress);
         $("#stateCity-wrapper").scrollIntoView(true);
-        $("#stateCity-wrapper").find(byId("state")).click();
-        $(".css-26l3qy-menu div").find(byText(state)).click();
-        $("#stateCity-wrapper").find(byId("city")).click();
-        $(".css-26l3qy-menu div").find(byText(city)).click();
+        chooseStateAndCity();
         $("#submit").click();
 
+    }
+
+    public void closeTheForm() {
+        $(".modal-footer").find(byCssSelector("#closeLargeModal")).
+                click();
+    }
+
+    public void checkTheForm() {
         $(".table-responsive").
                 shouldHave((text(firstName + " " + lastName)),
                         text(email),
@@ -52,35 +49,38 @@ public class StudentFormPageFill extends Parameters {
                         text(fileName),
                         text(currentAddress),
                         text(state + " " + city));
-        $(".modal-footer").find(byCssSelector("#closeLargeModal")).
-                click();
-
     }
 
-    @Test
-    public void fillTheFormWithoutNumber() {
-        open(endPoint);
+
+    public void fillCheckTheFormWithoutNumber() {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
         $(gender).click();
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").find(byText(month)).click();
-        $(".react-datepicker__year-select").find(byText(year)).click();
-        $(".react-datepicker__day--0" + day).click();
+        setupBirthDay();
         $("#subjectsInput").sendKeys(subject);
         $(".css-26l3qy-menu div").find(byText(subject)).click();
         $("#hobbiesWrapper").find(byText(hobby)).click();
-        $("#uploadPicture").uploadFile(file);
+        $("#uploadPicture").uploadFromClasspath(fileName);
         $("#currentAddress").setValue(currentAddress);
         $("#stateCity-wrapper").scrollIntoView(true);
+        chooseStateAndCity();
+        $("#submit").click();
+        $("#userNumber").shouldHave(Condition.attribute("pattern", "\\d*"));
+    }
+
+    public void chooseStateAndCity() {
         $("#stateCity-wrapper").find(byId("state")).click();
         $(".css-26l3qy-menu div").find(byText(state)).click();
         $("#stateCity-wrapper").find(byId("city")).click();
         $(".css-26l3qy-menu div").find(byText(city)).click();
-        $("#submit").click();
-
-        $("#userNumber").shouldHave(Condition.attribute("pattern", "\\d*"));
     }
+
+    public void setupBirthDay() {
+        $("#dateOfBirthInput").click();
+        $(".react-datepicker__month-select").find(byText(month)).click();
+        $(".react-datepicker__year-select").find(byText(year)).click();
+        $(".react-datepicker__day--0" + day).click();
+    }
+
 }
-//
