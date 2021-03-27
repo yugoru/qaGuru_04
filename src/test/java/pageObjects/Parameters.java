@@ -28,9 +28,9 @@ public class Parameters {
     String subject = getRandomFromArray(subjects);
     String hobby = getRandomFromArray(hobbes);
 
-    String[] genders = new String[]{"Female", "Male", "Other"};
-    int randomGender = new Random().nextInt(3) + 1;
-    String genderName = genders[randomGender];
+    String[] genders = new String[]{"Male", "Female", "Other"};
+    int randomGender = new Random().nextInt(2) + 1;
+    String genderName = genders[randomGender-1];
     String gender = "label[for=gender-radio-" + randomGender + "]";
 
     Path fileP = Paths.get("1.jpeg");
